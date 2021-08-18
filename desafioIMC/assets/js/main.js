@@ -1,7 +1,7 @@
 function calculaIMC(){
 
-  const form     = document.querySelector('#formulario');
-  
+  const form = document.querySelector('#formulario');
+  const div  = document.querySelector('#resultado');
 
   function enviandoForm(evento){
 
@@ -15,11 +15,7 @@ function calculaIMC(){
 
     function calculandoIMC(peso,altura){
 
-      console.log(peso,altura);
-
-      const imc =peso/(altura*altura);
-
-      console.log(imc);
+      const imc = peso/(altura*altura);
 
       let resultado = "";
 
@@ -47,11 +43,47 @@ function calculaIMC(){
         resultado = "Obesidade grau 3";
       }
       
-      return resultado;
+      return 'O seu IMC é: '+imc.toFixed(2)+' ('+resultado+').'; //toFixed(2) -- Formatando em duas casas decimais.
       
     }
 
-    calculandoIMC(peso,altura);
+    function addParagrafo(){
+
+      div.innerHTML='';
+      const p = document.createElement('p');  //Criando elemento parágrafo 
+      div.appendChild(p); //Inserindo o parágrafo na div
+
+      
+      if(!peso){
+
+       p.innerHTML = 'Peso inválido!';
+       p.classList.add('bad'); // Add classe bad ao paragráfo
+       return;
+       
+      }
+
+      else if(!altura) {
+
+        p.innerHTML = 'Altura inválida';
+        p.classList.add('bad'); // Add classe bad ao paragráfo
+        return;
+         
+
+      }
+
+      else{
+
+        const statusFinal = calculandoIMC(peso,altura);
+
+        p.classList.add('paragrafo-resultado'); // Add classe Ok ao parágrafo criado
+        p.innerHTML += `${statusFinal}`;
+
+      }
+    }
+
+    addParagrafo();
+
+    
 
   }
 
